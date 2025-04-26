@@ -1,0 +1,37 @@
+{
+  "name": "instagram-playwright-automation",
+  "version": "1.0.0",
+  "description": "This is a UI automation assignment project developed using Playwright and TypeScript.",
+  "main": "",
+  "scripts": {
+    "test": "npx playwright test --headed && npx playwright show-report",
+    "visual-test": "npx playwright test visual.spec.ts --headed && npx playwright show-report",
+    "e2e-test": "npx playwright test e2e.spec.ts --headed && npx playwright show-report",
+    "accessibility-test": "npx playwright test accessibility.spec.ts --headed && npx playwright show-report",
+    "visual-headless-test": "npx playwright test visual.spec.ts && npx playwright show-report",
+    "e2e-headless-test": "npx playwright test e2e.spec.ts && npx playwright show-report",
+    "accessibility-headless-test": "npx playwright test accessibility.spec.ts && npx playwright show-report",
+    "headless-test": "npx playwright test && npx playwright show-report",
+    "debug-test-dev": "npx playwright test --ui"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "nodejs",
+    "web-automation",
+    "test-automation"
+  ],
+  "author": "Mahendiran M",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^20.11.30"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@types/chance": "^1.1.6",
+    "chance": "^1.1.12",
+    "crypto-js": "^4.2.0",
+    "playwright": "^1.50.1"
+  }
+}
