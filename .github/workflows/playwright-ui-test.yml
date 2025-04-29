@@ -20,13 +20,13 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright UI Tests
-        run: npm run test
+        run: npm run headless-test
       - name: Run Playwright E2E Tests
-        run: npm run e2e-test
+        run: npm run e2e-headless-test
       - name: Run Playwright Accessibility Tests
-        run: npm run accessibility-test
+        run: npm run accessibility-headless-test
       - name: Run Playwright Visual Tests
-        run: npm run visual-test
+        run: npm run visual-headless-test
       - name: Upload Playwright Report Artifact
         if: always()
         uses: actions/upload-artifact@v4

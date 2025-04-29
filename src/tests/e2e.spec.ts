@@ -1,5 +1,5 @@
 import { Page, test, expect } from "@playwright/test";
-import { USER_NAME, PASSWORD, APPLICATION_URL, FIRST_NAME, SECOND_NAME, POSTAL_CODE } from "./constants/app.constant";
+import { INVALID_USER_NAME, INVALID_PASSWORD, USER_NAME, PASSWORD, APPLICATION_URL, FIRST_NAME, SECOND_NAME, POSTAL_CODE, } from "./constants/app.constant";
 import { AllitemPage } from "../pages/allitem.page";
 import { CheckoutPage } from "../pages/checkout.page";
 import { LoginPage } from "../pages/login.page";
@@ -29,7 +29,7 @@ test.describe("Sauce Demo E2E Test", () => {
       await checkoutPage.performCheckout(totalPrice, FIRST_NAME, SECOND_NAME, POSTAL_CODE);
     });
   });
-  test("Login with Invalid Password", async () => {
+  test("Login with Empty Password", async () => {
     await test.step("Login to Swag Labs", async () => {
       await loginPage.navigateToSwagLabs(APPLICATION_URL);
       await loginPage.login(USER_NAME, "");
@@ -37,7 +37,7 @@ test.describe("Sauce Demo E2E Test", () => {
     });
   });
 
-  test("Login with Invalid UserName", async () => {
+  test("Login with Empty UserName", async () => {
     await test.step("Login to Swag Labs", async () => {
       await loginPage.navigateToSwagLabs(APPLICATION_URL);
       await loginPage.login("", PASSWORD);
@@ -48,7 +48,7 @@ test.describe("Sauce Demo E2E Test", () => {
   test("Login with both Invalid UserName & Password", async () => {
     await test.step("Login to Swag Labs", async () => {
       await loginPage.navigateToSwagLabs(APPLICATION_URL);
-      await loginPage.login("invalid", "invalid");
+      await loginPage.login(INVALID_USER_NAME, INVALID_PASSWORD);
       expect(await loginPage.validateErrorToastMessage()).toBe("Epic sadface: Username and password do not match any user in this service");
     });
   });

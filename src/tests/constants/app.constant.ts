@@ -14,4 +14,8 @@ export const FIRST_NAME = testData.userName;
 export const SECOND_NAME = testData.userName;
 export const POSTAL_CODE = testData.userName;
 export const PASSWORD = testData.password;
+export const INVALID_USER_NAME = testData.invaliduserName;
+export const INVALID_PASSWORD = testData.invalidpassword;
+
+
 

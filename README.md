@@ -12,10 +12,33 @@ This project demonstrates a complete suite of end-to-end (E2E) tests for [Sauce 
 
 ## Prerequisites
 
-- Node.js v16+  
-- Playwright  
-- @axe-core/playwright
-- Git
+### Software Requirements
+- Node.js v16+ (v18 recommended)
+- npm v8+ or yarn v1.22+
+- Git v2.30+
+
+### Browser Dependencies
+- Chromium-based browser (Chrome v100+ or Edge v100+)
+- Firefox v95+
+- WebKit (Safari engine) v16+
+
+### Testing Libraries
+- Playwright v1.30+ (installed via npm)
+- @axe-core/playwright v4.5+ (for accessibility testing)
+- @playwright/test framework
+
+### Development Environment
+- Visual Studio Code (recommended with Playwright extension)
+- Terminal access (for running commands)
+- 4GB RAM minimum (8GB recommended)
+- 1GB free disk space
+
+### Operating System Support
+- Windows 10/11
+- macOS Monterey (12.0) or later
+- Ubuntu 20.04+ or other major Linux distributions
+
+All browser dependencies will be automatically installed when running `npx playwright install`.
 
 ---
 
@@ -50,15 +73,21 @@ npx playwright install
 
 ## Configuration
 
-Application credentials are defined in:
+Application credentials and test data are defined in:
 
 - `constants/testdata.json`
 
 ```json
 {
   "userName": "standard_user",
-  "password": "secret_sauce"
+  "password": "secret_sauce",
+  "firstName": "Test",
+  "lastName": "User",
+  "postalCode": "12345",
+  "invaliduserName": "test",
+  "Invalidpassword": "test"
 }
+
 ```
 
 You can modify this file based on your environment or set up ENV-based configuration as needed.
@@ -147,6 +176,64 @@ Visual snapshots are auto-generated and compared. Review failures via the Playwr
 
 ---
 
+## CI/CD Integration
+
+This project includes CI/CD pipeline configurations for automated testing on each code push and pull request.
+
+### GitHub Actions Workflow
+
+The repository contains GitHub Actions workflows that automatically execute the test suite:
+
+```yaml
+name: Playwright Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+        
+      - name: Run Playwright tests
+        run: npm run headless-test
+        
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+```
+
+### Pipeline Features
+
+- **Automated Testing**: All tests run automatically on code changes
+- **Cross-Browser Testing**: Tests execute across multiple browsers
+- **Artifact Preservation**: Test reports are saved as pipeline artifacts
+- **Scheduled Testing**: Optional nightly test runs to catch regressions
+
+### Integration with Test Management
+
+Test results can be integrated with popular test management tools through API connections in the CI/CD pipeline.
+
+---
+
 ## Test Coverage
 
 ### Login, Add Products, Checkout
@@ -192,6 +279,9 @@ Visual snapshots are auto-generated and compared. Review failures via the Playwr
 │   │   ├── 04-allitems-complete-chrome-darwin.png
 ├── package.json
 ├── playwright.config.ts
+├── .github/
+│   ├── workflows/
+│   │   └── playwright.yml
 └── README.md
 ```
 
@@ -204,3 +294,9 @@ To open Playwright's built-in test report after any test run:
 ```
 npx playwright show-report
 ```
+
+## Repository and Demo
+
+- **Repository**: [https://github.com/beardo-cs/sauce-playwright-e2e](https://github.com/beardo-cs/sauce-playwright-e2e)
+- **Demo Recording**: [View Demo](https://www.youtube.com/watch?v=example)
+- **Test Cases Link**: [View Sheet](https://docs.google.com/spreadsheets/d/19Y6AVa4oe8AaX_R5k_BG9TpuhcaC11PL-DjqC-POAC0/edit?usp=sharing)

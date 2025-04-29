@@ -2,7 +2,7 @@ import { PlaywrightTestConfig, devices } from "@playwright/test";
 
 interface TestConfig extends PlaywrightTestConfig {
   appUrl: string;
-testDataDir: string;
+  testDataDir: string;
 }
 
 /**
@@ -92,8 +92,7 @@ const defaultConfig: PlaywrightTestConfig = {
 };
 
 
-// Get the environment from command line. If none, set it to dev
-const environment = process.env.TEST_ENV || "dev";
+
 
 // Config object with default configuration and environment specific configuration
 const config: TestConfig = {

@@ -3,5 +3,7 @@
   "password": "secret_sauce",
   "firstName": "Test",
   "lastName": "User",
-  "postalCode": "12345"
+  "postalCode": "12345",
+  "invaliduserName": "test",
+  "invalidpassword": "test"
 }

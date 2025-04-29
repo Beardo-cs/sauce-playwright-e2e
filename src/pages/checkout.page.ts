@@ -7,11 +7,11 @@ export class CheckoutPage {
     this.page = page;
   }
 
-  async performCheckout(totalPrice: number, firstName: string, secondName: string, postalCode: number) {
+  async performCheckout(totalPrice: number, firstName: string, secondName: string, postalCode: string) {
     await this.page.click('[data-test="checkout"]');
-    await this.page.fill('[data-test="firstName"]', 'QA');
-    await this.page.fill('[data-test="lastName"]', 'Tester');
-    await this.page.fill('[data-test="postalCode"]', '12345');
+    await this.page.fill('[data-test="firstName"]', firstName);
+    await this.page.fill('[data-test="lastName"]', secondName);
+    await this.page.fill('[data-test="postalCode"]', postalCode);
     await this.page.click('[data-test="continue"]');
 
     const itemTotalText = await this.page.locator('.summary_subtotal_label').innerText();
