@@ -3,17 +3,26 @@ import { USER_NAME, PASSWORD, APPLICATION_URL, FIRST_NAME, SECOND_NAME, POSTAL_C
 import { AllitemPage } from "../pages/allitem.page";
 import { CheckoutPage } from "../pages/checkout.page";
 import { LoginPage } from "../pages/login.page";
-import { writeFileSync } from "fs";
+import { writeFileSync, existsSync, mkdirSync } from "fs";
 import { AxeBuilder } from "@axe-core/playwright";
+import path from "path";
 
 test.describe("Sauce Demo Accessibility Tests", () => {
   let allItemPage: AllitemPage;
   let checkoutPage: CheckoutPage;
   let loginPage: LoginPage;
+  
+  // Ensure the Accessibility directory exists within the test directory
+  const accessibilityDir = path.join(__dirname, "Accessibility");
+  if (!existsSync(accessibilityDir)) {
+    mkdirSync(accessibilityDir, { recursive: true });
+  }
 
   const checkA11yAndLog = async (page: Page, step: string): Promise<any[]> => {
     const { violations } = await new AxeBuilder({ page }).analyze();
-    writeFileSync(`Accessibility/a11y-snapshot-${step}.json`, JSON.stringify(violations, null, 2));
+    const filePath = path.join(accessibilityDir, `a11y-snapshot-${step}.json`);
+    writeFileSync(filePath, JSON.stringify(violations, null, 2));
+    
     if (violations.length > 0) {
       console.warn(`Accessibility violations detected on: ${step}`);
       console.table(
@@ -64,7 +73,7 @@ test.describe("Sauce Demo Accessibility Tests", () => {
     await loginPage.login(USER_NAME, PASSWORD);
     const totalPrice = await allItemPage.addProductsToCart();
     await allItemPage.navigateToCart();
-      await checkoutPage.performCheckout(totalPrice, FIRST_NAME, SECOND_NAME, POSTAL_CODE);
+    await checkoutPage.performCheckout(totalPrice, FIRST_NAME, SECOND_NAME, POSTAL_CODE);
     const violations = await checkA11yAndLog(page, "checkout-page");
     expect(violations, "Accessibility violations on checkout page").toHaveLength(0);
   });
