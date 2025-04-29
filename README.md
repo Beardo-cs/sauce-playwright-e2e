@@ -298,5 +298,5 @@ npx playwright show-report
 ## Repository and Demo
 
 - **Repository**: [https://github.com/beardo-cs/sauce-playwright-e2e](https://github.com/beardo-cs/sauce-playwright-e2e)
-- **Demo Recording**: [View Demo](https://www.youtube.com/watch?v=example)
+- **Demo Recording**: [View Demo](https://www.loom.com/share/e8f5b26baad44ea19b38c3790bf48be1?sid=5668ad89-4f88-416f-9b7e-439b45ab107b)
 - **Test Cases Link**: [View Sheet](https://docs.google.com/spreadsheets/d/19Y6AVa4oe8AaX_R5k_BG9TpuhcaC11PL-DjqC-POAC0/edit?usp=sharing)
