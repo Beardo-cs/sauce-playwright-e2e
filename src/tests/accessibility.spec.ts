@@ -1,13 +1,13 @@
 import { Page, test, expect } from "@playwright/test";
 import { USER_NAME, PASSWORD, APPLICATION_URL, FIRST_NAME, SECOND_NAME, POSTAL_CODE } from "./constants/app.constant";
-import { InventoryPage } from "../pages/inventory.page";
+import { AllitemPage } from "../pages/allitem.page";
 import { CheckoutPage } from "../pages/checkout.page";
 import { LoginPage } from "../pages/login.page";
 import { writeFileSync } from "fs";
 import { AxeBuilder } from "@axe-core/playwright";
 
 test.describe("Sauce Demo Accessibility Tests", () => {
-  let inventoryPage: InventoryPage;
+  let allItemPage: AllitemPage;
   let checkoutPage: CheckoutPage;
   let loginPage: LoginPage;
 
@@ -32,7 +32,7 @@ test.describe("Sauce Demo Accessibility Tests", () => {
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
-    inventoryPage = new InventoryPage(page);
+    allItemPage = new AllitemPage(page);
     checkoutPage = new CheckoutPage(page);
   });
 
@@ -43,7 +43,7 @@ test.describe("Sauce Demo Accessibility Tests", () => {
     expect(violations, "Accessibility violations on login page").toHaveLength(0);
   });
 
-  test("Inventory Page Accessibility", async ({ page }) => {
+  test("All Items Page Accessibility", async ({ page }) => {
     await loginPage.navigateToSwagLabs(APPLICATION_URL);
     await loginPage.login(USER_NAME, PASSWORD);
     const violations = await checkA11yAndLog(page, "inventory-page");
@@ -53,8 +53,8 @@ test.describe("Sauce Demo Accessibility Tests", () => {
   test("Cart Page Accessibility", async ({ page }) => {
     await loginPage.navigateToSwagLabs(APPLICATION_URL);
     await loginPage.login(USER_NAME, PASSWORD);
-    await inventoryPage.addProductsToCart();
-    await inventoryPage.navigateToCart();
+    await allItemPage.addProductsToCart();
+    await allItemPage.navigateToCart();
     const violations = await checkA11yAndLog(page, "cart-page");
     expect(violations, "Accessibility violations on cart page").toHaveLength(0);
   });
@@ -62,8 +62,8 @@ test.describe("Sauce Demo Accessibility Tests", () => {
   test("Checkout Page Accessibility", async ({ page }) => {
     await loginPage.navigateToSwagLabs(APPLICATION_URL);
     await loginPage.login(USER_NAME, PASSWORD);
-    const totalPrice = await inventoryPage.addProductsToCart();
-    await inventoryPage.navigateToCart();
+    const totalPrice = await allItemPage.addProductsToCart();
+    await allItemPage.navigateToCart();
       await checkoutPage.performCheckout(totalPrice, FIRST_NAME, SECOND_NAME, POSTAL_CODE);
     const violations = await checkA11yAndLog(page, "checkout-page");
     expect(violations, "Accessibility violations on checkout page").toHaveLength(0);
@@ -81,22 +81,22 @@ test.describe("Sauce Demo Accessibility Tests", () => {
     });
 
     await test.step("Inventory", async () => {
-      await inventoryPage.validateProductName();
-      await inventoryPage.validatePrice();
+      await allItemPage.validateProductName();
+      await allItemPage.validatePrice();
       const v = await checkA11yAndLog(page, "inventory-page");
       allViolations.push(...v);
     });
 
     await test.step("Cart", async () => {
-      await inventoryPage.addProductsToCart();
-      await inventoryPage.navigateToCart();
+      await allItemPage.addProductsToCart();
+      await allItemPage.navigateToCart();
       const v = await checkA11yAndLog(page, "cart-page");
       allViolations.push(...v);
     });
 
     await test.step("Checkout", async () => {
-      const totalPrice = await inventoryPage.addProductsToCart();
-      await inventoryPage.navigateToCart();
+      const totalPrice = await allItemPage.addProductsToCart();
+      await allItemPage.navigateToCart();
       await checkoutPage.performCheckout(totalPrice, FIRST_NAME, SECOND_NAME, POSTAL_CODE);
       const v = await checkA11yAndLog(page, "checkout-complete");
       allViolations.push(...v);

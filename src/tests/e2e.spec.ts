@@ -1,17 +1,17 @@
 import { Page, test, expect } from "@playwright/test";
 import { USER_NAME, PASSWORD, APPLICATION_URL, FIRST_NAME, SECOND_NAME, POSTAL_CODE } from "./constants/app.constant";
-import { InventoryPage } from "../pages/inventory.page";
+import { AllitemPage } from "../pages/allitem.page";
 import { CheckoutPage } from "../pages/checkout.page";
 import { LoginPage } from "../pages/login.page";
 
 test.describe("Sauce Demo E2E Test", () => {
-  let inventoryPage: InventoryPage;
+  let allItemPage: AllitemPage;
   let checkoutPage: CheckoutPage;
   let loginPage: LoginPage;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
-    inventoryPage = new InventoryPage(page);
+    allItemPage = new AllitemPage(page);
     checkoutPage = new CheckoutPage(page);
   });
 
@@ -22,10 +22,10 @@ test.describe("Sauce Demo E2E Test", () => {
     });
 
     await test.step("Validate and Add Products to Cart", async () => {
-      await inventoryPage.validateProductName();
-      await inventoryPage.validatePrice();
-      const totalPrice = await inventoryPage.addProductsToCart(); 
-      await inventoryPage.navigateToCart();
+      await allItemPage.validateProductName();
+      await allItemPage.validatePrice();
+      const totalPrice = await allItemPage.addProductsToCart(); 
+      await allItemPage.navigateToCart();
       await checkoutPage.performCheckout(totalPrice, FIRST_NAME, SECOND_NAME, POSTAL_CODE);
     });
   });

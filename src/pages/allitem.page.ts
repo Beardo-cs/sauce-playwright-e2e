@@ -1,7 +1,7 @@
 import { Page, Locator,expect } from "@playwright/test";
 import { CheckoutPage } from "./checkout.page";
 
-export class InventoryPage {
+export class AllitemPage {
   readonly page: Page;
   readonly productContainer: Locator;
   readonly inventoryProductName: Locator;

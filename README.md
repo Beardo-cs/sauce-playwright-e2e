@@ -157,14 +157,14 @@ Visual snapshots are auto-generated and compared. Review failures via the Playwr
 
 ### Accessibility Checks
 - Login Page
-- Inventory Page
+- All Items Page
 - Cart Page
 - Checkout Page
 - Full E2E Flow (with soft assert for accessibility)
 
 ### Visual Testing
 - Login Screenshot
-- Inventory Screenshot
+- All Items Screenshot
 - Cart Screenshot
 - Checkout Completion Screenshot
 
@@ -175,7 +175,7 @@ Visual snapshots are auto-generated and compared. Review failures via the Playwr
 ```
 ├── pages/
 │   ├── login.page.ts
-│   ├── inventory.page.ts
+│   ├── allitems.page.ts
 │   ├── checkout.page.ts
 ├── tests/
 │   ├── e2e.spec.ts
@@ -189,7 +189,7 @@ Visual snapshots are auto-generated and compared. Review failures via the Playwr
 │   │   ├── 01-home-after-login-chrome-darwin.png
 │   │   ├── 02-inventory-page-chrome-darwin.png
 │   │   ├── 03-cart-page-chrome-darwin.png
-│   │   ├── 04-checkout-complete-chrome-darwin.png
+│   │   ├── 04-allitems-complete-chrome-darwin.png
 ├── package.json
 ├── playwright.config.ts
 └── README.md
